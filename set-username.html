@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Benutzernamen festlegen</title>
+
+    <link rel="stylesheet" href="style-settings.css">
+
+    <!-- Firebase Config + SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+
+
+<body>
+
+<header class="topbar">
+    <h1>Benutzernamen festlegen</h1>
+</header>
+
+<main class="page">
+    <section class="settings-card">
+        <h2>Wie sollen wir dich nennen?</h2>
+
+        <input id="usernameInput" class="input" placeholder="z. B. jesper_kocht">
+        <button id="saveUsernameBtn" class="btn primary">Speichern</button>
+
+        <p id="usernameError" style="color:red;margin-top:10px;font-weight:bold;"></p>
+    </section>
+</main>
+
+<script>
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const input = document.getElementById("usernameInput");
+    const saveBtn = document.getElementById("saveUsernameBtn");
+    const err = document.getElementById("usernameError");
+
+    auth.onAuthStateChanged(async (user) => {
+
+        if (!user) {
+            err.textContent = "Du bist nicht eingeloggt!";
+            return;
+        }
+
+        saveBtn.onclick = async () => {
+            err.textContent = "";
+
+            const username = input.value.trim();
+
+            if (username.length < 3) {
+                err.textContent = "Mindestens 3 Zeichen!";
+                return;
+            }
+
+            try {
+                const query = await db.collection("users")
+                    .where("username", "==", username)
+                    .get();
+
+                if (!query.empty) {
+                    err.textContent = "Name schon vergeben!";
+                    return;
+                }
+
+                await db.collection("users").doc(user.uid).set({
+                    username: username,
+                    email: user.email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                }, { merge: true });
+
+                window.location.href = "dashboard.html";
+
+            } catch (e) {
+                err.textContent = "Fehler: " + e.message;
+            }
+        };
+    });
+
+</script>
+
+</body>
+</html>

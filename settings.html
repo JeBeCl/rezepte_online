@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Einstellungen – Rezepte</title>
+
+    <link rel="stylesheet" href="style-settings.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="dashboard.html" class="back-btn">←</a>
+    <h1>Einstellungen</h1>
+    <div></div>
+</header>
+
+<main class="page">
+
+    <!-- Profil -->
+    <section class="settings-card">
+        <h2>👤 Profil</h2>
+
+        <div class="profile-section">
+            <img id="profileAvatar" src="Bilder/user.png" class="profile-avatar">
+            <div>
+                <p id="profileName" class="profile-name">–</p>
+                <p id="profileEmail" class="profile-email">–</p>
+            </div>
+        </div>
+
+        <button class="btn edit" id="changeNameBtn">Name ändern</button>
+        <button class="btn edit" id="changePasswordBtn">Passwort ändern</button>
+    </section>
+
+    <!-- Anzeige -->
+    <section class="settings-card">
+        <h2>🌓 Erscheinungsbild</h2>
+
+        <div class="toggle-row">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </section>
+
+    <!-- Konto -->
+    <section class="settings-card">
+        <h2>⚠️ Konto</h2>
+
+        <button class="btn danger" id="logoutBtn">Logout</button>
+    </section>
+
+</main>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+        authDomain: "rezepte-app-c72fb.firebaseapp.com",
+        projectId: "rezepte-app-c72fb",
+        storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+        messagingSenderId: "316955454818",
+        appId: "1:316955454818:web:b435764d1a06abe4add03b"
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+<script src="settings.js"></script>
+
+</body>
+</html>

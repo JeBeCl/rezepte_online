@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kochbuch</title>
+
+    <!-- PWA -->
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="Bilder/icon-192.png">
+    <link rel="apple-touch-icon" href="Bilder/icon-192.png">
+
+    <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Rezepte</h1>
+
+    <!-- USER MENU -->
+<div class="user-box" id="userBox" style="display:none;">
+    <img src="Bilder/user.png" class="user-icon" id="userIcon">
+    <div class="user-menu" id="userMenu">
+                        <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<!-- LOGIN BUTTON -->
+<button id="loginBtn" class="auth-btn">Login</button>
+
+
+</header>
+
+    <nav>
+        <button id="openModalBtn">Erstellen</button>
+        <input 
+            id="searchInput" 
+            type="search" 
+            placeholder="Suche nach Titel, Zutaten oder Tags …">
+
+        <select id="sortSelect" class="sort-select">
+            <option value="rating">Beste Bewertung</option>
+            <option value="alphabet">A–Z</option>
+        </select>
+    </nav>
+
+    <!-- Rezept-Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close">&times;</span>
+            <h2 id="modalTitle">Neues Rezept</h2>
+
+            <form id="recipeForm">
+
+                <label for="title">Titel</label>
+                <input type="text" id="title" required>
+
+                <label for="description">Kurzbeschreibung</label>
+                <textarea id="description" rows="2"></textarea>
+
+                <label for="imageFile">Bild hochladen</label>
+                <input type="file" id="imageFile" accept="image/*">
+
+                <div id="uploadStatus" style="margin:5px 0; font-size:0.9rem; color:gray;"></div>
+
+                <label for="tags">Tags (kommagetrennt)</label>
+                <input id="tags" placeholder="z.B. Nudeln, Schnell, Vegetarisch">
+
+                <label for="ingredients">Zutaten (eine pro Zeile)</label>
+                <textarea id="ingredients" rows="4"></textarea>
+
+                <label for="steps">Zubereitung (eine Aktion pro Zeile)</label>
+                <textarea id="steps" rows="4"></textarea>
+
+                <button type="submit" class="submit-btn">Speichern</button>
+            </form>
+
+        </div>
+    </div>
+
+    <main>
+        <section id="recipeContainer" class="card-grid"></section>
+    </main>
+
+    <footer>
+        &copy; 2025 – Rezepte-App
+    </footer>
+
+
+    <!-- Firebase COMPAT SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+        apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+        authDomain: "rezepte-app-c72fb.firebaseapp.com",
+        projectId: "rezepte-app-c72fb",
+        storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+        messagingSenderId: "316955454818",
+        appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Service Worker für PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => {
+            console.log('Service Worker registriert:', reg.scope);
+          })
+          .catch(err => {
+            console.error('Service Worker Fehler:', err);
+          });
+      });
+    }
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

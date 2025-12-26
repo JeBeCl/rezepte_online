@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Rezepte-App</title>
+
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="Bilder/icon-192.png">
+    <link rel="apple-touch-icon" href="Bilder/icon-192.png">
+
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-card">
+        <h1>Rezepte-App</h1>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tabLogin">Login</div>
+            <div class="auth-tab" id="tabRegister">Registrieren</div>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+            <input type="email" id="loginEmail" placeholder="E-Mail" required>
+            <input type="password" id="loginPassword" placeholder="Passwort" required>
+            <button type="submit" class="auth-primary-btn">Einloggen</button>
+            <div class="auth-link" id="forgotLink">Passwort vergessen?</div>
+        </form>
+
+        <form id="registerForm" class="auth-form" style="display:none;">
+            <input type="email" id="registerEmail" placeholder="E-Mail" required>
+            <input type="password" id="registerPassword" placeholder="Passwort" required>
+            <input type="password" id="registerPassword2" placeholder="Passwort wiederholen" required>
+            <button type="submit" class="auth-primary-btn">Account erstellen</button>
+        </form>
+
+        <div id="authMessage" class="auth-message"></div>
+        <div id="authError" class="auth-error"></div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <script>
+        const tabLogin = document.getElementById('tabLogin');
+        const tabRegister = document.getElementById('tabRegister');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const forgotLink = document.getElementById('forgotLink');
+        const msgEl = document.getElementById('authMessage');
+        const errEl = document.getElementById('authError');
+
+        function showLogin() {
+            tabLogin.classList.add('active');
+            tabRegister.classList.remove('active');
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            msgEl.textContent = '';
+            errEl.textContent = '';
+        }
+
+        function showRegister() {
+            tabRegister.classList.add('active');
+            tabLogin.classList.remove('active');
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            msgEl.textContent = '';
+            errEl.textContent = '';
+        }
+
+        tabLogin.onclick = showLogin;
+        tabRegister.onclick = showRegister;
+
+        // NUR EIN EINZIGER onAuthStateChanged!!!
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) return;
+
+            // Prüfen ob Username existiert
+            const snap = await db.collection("users").doc(user.uid).get();
+
+            if (!snap.exists || !snap.data().username) {
+                window.location.href = "set-username.html";
+                return;
+            }
+
+            // alles ok → Dashboard
+            window.location.href = "dashboard.html";
+        });
+
+        // LOGIN
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msgEl.textContent = '';
+            errEl.textContent = '';
+
+            const email = loginEmail.value.trim();
+            const pw = loginPassword.value;
+
+            try {
+                await auth.signInWithEmailAndPassword(email, pw);
+                msgEl.textContent = 'Login erfolgreich...';
+            } catch (err) {
+                errEl.textContent = err.message;
+            }
+        });
+
+        // REGISTER
+        registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msgEl.textContent = '';
+    errEl.textContent = '';
+
+    const email = registerEmail.value.trim();
+    const pw1 = registerPassword.value;
+    const pw2 = registerPassword2.value;
+
+    if (pw1 !== pw2) {
+        errEl.textContent = 'Passwörter stimmen nicht überein.';
+        return;
+    }
+
+    try {
+        const cred = await auth.createUserWithEmailAndPassword(email, pw1);
+
+        // Optional: Email Verification (blockiert Redirect, deshalb erst NACH der Weiterleitung wichtig)
+        cred.user.sendEmailVerification().catch(() => {});
+
+        // MANUELL weiterleiten
+        msgEl.textContent = "Account erstellt! Bitte Benutzernamen wählen...";
+        setTimeout(() => {
+            window.location.href = "set-username.html";
+        }, 600);
+
+    } catch (err) {
+        errEl.textContent = err.message;
+    }
+});
+
+
+        // PASSWORT VERGESSEN
+        forgotLink.addEventListener('click', async () => {
+            const email = prompt('E-Mail für Reset-Link eingeben:');
+            if (!email) return;
+
+            try {
+                await auth.sendPasswordResetEmail(email);
+                msgEl.textContent = 'Reset-Link gesendet.';
+            } catch (err) {
+                errEl.textContent = err.message;
+            }
+        });
+    </script>
+
+</body>
+</html>

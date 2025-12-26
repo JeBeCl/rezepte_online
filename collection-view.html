@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sammlung ansehen</title>
+
+    <link rel="stylesheet" href="style-dashboard.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="collections.html" class="logo">← Zurück</a>
+    <h1 id="collectionTitle">Sammlung</h1>
+
+    <div class="topbar-actions">
+        <button id="renameCollectionBtn" class="btn ghost">✏️ Umbenennen</button>
+        <button id="deleteCollectionBtn" class="btn danger">🗑️ Löschen</button>
+    </div>
+</header>
+
+
+<main class="page">
+    <section id="recipesGrid" class="recipes-grid">
+        <p class="muted">Lade Rezepte…</p>
+    </section>
+
+    <div id="removeModal" class="modal">
+    <div class="modal-content small">
+        <h3>Rezept entfernen?</h3>
+        <p>Dieses Rezept wird nur aus der Sammlung entfernt, nicht gelöscht.</p>
+
+        <div class="modal-actions">
+            <button id="cancelRemoveBtn" class="btn ghost">Abbrechen</button>
+            <button id="confirmRemoveBtn" class="btn danger">Entfernen</button>
+        </div>
+    </div>
+</div>
+
+</main>
+
+
+
+<!-- Modal: Sammlung umbenennen -->
+<div id="renameCollectionModal" class="modal">
+    <div class="modal-content small">
+        <h2>Sammlung umbenennen</h2>
+
+        <label>Neuer Name</label>
+        <input id="renameInput" type="text" placeholder="Neuer Name">
+
+        <label>Neues Icon (Emoji)</label>
+        <input id="renameIconInput" type="text" placeholder="📁">
+
+        <div class="modal-actions">
+            <button id="cancelRename" class="btn ghost">Abbrechen</button>
+            <button id="confirmRename" class="btn primary">Speichern</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal: Sammlung löschen -->
+<div id="deleteCollectionModal" class="modal">
+    <div class="modal-content small danger">
+        <h2>Sammlung löschen?</h2>
+        <p>Diese Sammlung und alle gespeicherten Verweise werden dauerhaft gelöscht.</p>
+
+        <div class="modal-actions">
+            <button id="cancelDelete" class="btn ghost">Abbrechen</button>
+            <button id="confirmDelete" class="btn danger">Löschen</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal: Rezept entfernen -->
+<div id="removeRecipeModal" class="modal">
+    <div class="modal-content small danger">
+        <h2>Rezept entfernen?</h2>
+        <p>Dieses Rezept wird nur aus der Sammlung entfernt, nicht gelöscht.</p>
+
+        <div class="modal-actions">
+            <button id="cancelRemoveRecipe" class="btn ghost">Abbrechen</button>
+            <button id="confirmRemoveRecipe" class="btn danger">Entfernen</button>
+        </div>
+    </div>
+</div>
+
+<script src="collection-view.js"></script>
+</body>
+</html>

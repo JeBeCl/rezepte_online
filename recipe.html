@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezept</title>
+
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="Bilder/icon-192.png">
+    <link rel="apple-touch-icon" href="Bilder/icon-192.png">
+
+    <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Rezepte</h1>
+
+    <a href="index.html" class="back-btn">← Zurück</a>
+
+
+    <div class="auth-box">
+
+        <!-- Login-Button (wenn ausgeloggt) -->
+        <button id="loginBtn" class="auth-btn">Login</button>
+
+        <!-- User-Icon und Menü (wenn eingeloggt) -->
+        <div class="user-box" id="userBox" style="display:none;">
+            <img src="Bilder/user.png" class="user-icon" id="userIcon">
+            <div class="user-menu" id="userMenu">
+                <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+    <div class="detail-container">
+
+        <div id="recipeControls" class="detail-controls">
+            <button id="saveToCollectionBtn" class="detail-save-btn">In Sammlung speichern</button>
+            <button id="editBtn" class="edit-btn-detail">Bearbeiten</button>
+            <button id="deleteBtn" class="delete-btn-detail">Löschen</button>
+        </div>
+
+        <div id="recipeContent"></div>
+
+    </div>
+
+<!-- Sammlung auswählen Modal -->
+<div id="collectionSelectModal" class="collection-select-modal">
+    <div class="collection-select-box">
+        <h2>In Sammlung speichern</h2>
+
+        <div id="collectionSelectList" class="collection-select-list"></div>
+
+        <button id="closeCollectionSelect" class="modal-cancel-btn">
+            Abbrechen
+        </button>
+    </div>
+</div>
+
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+            };
+
+
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="recipe.js"></script>
+
+</body>
+</html>

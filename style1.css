@@ -1,0 +1,1030 @@
+/* ====================================
+   GLOBAL
+==================================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #fafafa;
+    color: #333;
+}
+
+footer{
+    text-align: center;
+}
+
+/* ====================================
+   HEADER
+==================================== */
+header {
+    background: #552834;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* ====================================
+   NAVIGATION
+==================================== */
+nav {
+    background: #341920;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    top: 0;
+    z-index: 9;
+}
+
+nav button {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    border: 1px black solid;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+nav button:hover {
+    background-color: black;
+    color: white;
+}
+
+nav input[type="search"] {
+    padding: 10px 16px;
+    border-radius: 9999px;
+    border: 1px solid black;
+    width: 240px;
+    font-size: 1rem;
+}
+
+.sort-select {
+    padding: 10px 14px;
+    border-radius: 9999px;
+    border: 1px solid black;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+}
+
+.sort-select:focus {
+    outline: none;
+    border: 1px solid #333;
+}
+
+/* ====================================
+   CARD GRID
+==================================== */
+.card-grid {
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* ====================================
+   CARD
+==================================== */
+.recipe-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: transform .15s ease, box-shadow .15s ease;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    height: 360px; /* Desktop: gleiche Höhe */
+}
+
+.recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Card Image */
+.recipe-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+    transition: transform .3s ease;
+}
+
+.recipe-card:hover .recipe-img {
+    transform: scale(1.04);
+}
+
+/* Card Title */
+.recipe-card h3 {
+    margin: 15px 15px 8px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+/* Sterne in Cards */
+.card-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 15px 10px;
+}
+
+.card-rating-row .star {
+    font-size: 1.1rem;
+    cursor: default;
+}
+
+.card-rating-text {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* Tags */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 15px 15px;
+    padding-bottom: 5px;
+}
+
+.tag-pill {
+    background: #e6f7ee;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    color: #27ae60;
+}
+
+/* ====================================
+   MODAL (Popup)
+==================================== */
+.modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+
+    display: flex;               /* zeigt das Modal (wenn JS .style.display = "flex") */
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+
+    visibility: hidden;          /* unsichtbar */
+    opacity: 0;                  /* unsichtbar */
+    pointer-events: none;        /* keine Klicks */
+    transition: opacity .25s ease;
+}
+
+.modal.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;       /* nicht höher als Viewport */
+    padding: 22px;
+    border-radius: 12px;
+    overflow-y: auto;       /* INNEN scrollen */
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.close {
+    float: right;
+    font-size: 1.7rem;
+    cursor: pointer;
+}
+
+#recipeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#recipeForm input,
+#recipeForm textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background: #2ecc71;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+#uploadStatus {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* ====================================
+   DETAIL PAGE
+==================================== */
+.detail-container {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 20px;
+}
+
+.detail-img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.detail-title {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.detail-tags {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.detail-desc {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.detail-list {
+    margin-left: 20px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Sterne Detail */
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.star-container {
+    display: flex;
+    gap: 6px;
+}
+
+.star {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: 0.15s ease;
+}
+
+.star.filled {
+    color: #f4b400;
+}
+
+.star:hover {
+    transform: scale(1.15);
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ====================================
+   DETAIL CONTROLS (Edit / Delete)
+==================================== */
+.detail-controls {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0 20px;
+}
+
+.edit-btn-detail,
+.delete-btn-detail {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.edit-btn-detail {
+    background: black;
+    color: white;
+}
+
+.delete-btn-detail {
+    background: #e53935;
+    color: white;
+}
+
+.edit-btn-detail:hover {
+    background: #333;
+}
+
+.delete-btn-detail:hover {
+    background: #c62828;
+}
+
+/* ====================================
+   BACK BUTTON
+==================================== */
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.25s ease;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateX(-3px);
+}
+
+
+/* ====================================
+   KOMMENTARE
+==================================== */
+.comment-divider {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.comment-list {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comment-placeholder {
+    font-size: 0.95rem;
+    color: #777;
+}
+
+.comment-item {
+    background: #f7f7f7;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.comment-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.comment-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    background: #111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.comment-meta {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.comment-item p {
+    margin: 5px 0 0;
+    font-size: 0.95rem;
+}
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.comment-box input,
+.comment-box textarea {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.comment-btn {
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.comment-btn:hover {
+    background: #333;
+}
+
+.comment-delete {
+    background: transparent;
+    border: none;
+    color: #c62828;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.comment-delete:hover {
+    text-decoration: underline;
+}
+
+/* ====================================
+   RESPONSIVE BREAKPOINTS
+==================================== */
+
+/* Tablet & Handy */
+@media (max-width: 900px) {
+    header {
+        font-size: 1.4rem;
+        padding: 16px;
+    }
+
+    .detail-container {
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .detail-img {
+        height: 260px;
+    }
+
+    .detail-title {
+        font-size: 1.7rem;
+    }
+
+    .detail-list {
+        font-size: 1rem;
+    }
+}
+
+/* Handy quer & kleinere Tablets */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav button,
+    nav input[type="search"],
+    .sort-select {
+        width: 50%;
+        max-width: 100%;
+        margin-left: auto;
+    margin-right: auto;
+    }
+
+    .card-grid {
+        margin: 20px 15px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .recipe-card {
+        height: auto; /* auf Handy darf die Höhe flexibel sein */
+    }
+
+    .detail-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+/* Sehr kleine Handys */
+@media (max-width: 480px) {
+    header {
+        font-size: 1.3rem;
+        padding: 14px;
+    }
+
+    .detail-title {
+        font-size: 1.5rem;
+    }
+
+    .rating-row .star {
+        font-size: 1.5rem;
+    }
+
+    .detail-container {
+        padding: 10px;
+    }
+
+    .detail-img {
+        height: 220px;
+    }
+
+    .comment-item {
+        font-size: 0.9rem;
+    }
+
+    .back-btn {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ===== Auth-Box im Header oben rechts ===== */
+header {
+    position: relative;
+}
+
+.auth-box {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.auth-btn {
+    padding: 6px 12px;
+    border-radius: 9999px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.auth-btn:hover {
+    background: white;
+    color: black;
+}
+
+#userInfo {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ===== Login/Registrieren Seite (login.html) ===== */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    margin: 0;
+}
+
+.auth-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+}
+
+.auth-card h1 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 16px;
+    border-radius: 9999px;
+    background: #f0f0f0;
+    padding: 4px;
+}
+
+.auth-tab {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.auth-tab.active {
+    background: black;
+    color: white;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.auth-primary-btn {
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 9999px;
+    border: none;
+    background: black;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.auth-primary-btn:hover {
+    background: #333;
+}
+
+.auth-link {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.auth-message {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #27ae60;
+}
+
+.auth-error {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #e53935;
+}
+
+
+.star {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 5;
+}
+
+
+#ratingStars {
+    pointer-events: auto !important;
+    z-index: 10;
+    position: relative;
+}
+
+.rating-row {
+    position: relative;
+    z-index: 9999 !important;
+}
+
+#ratingStars {
+    position: relative;
+    z-index: 1 !important;
+}
+
+.star {
+    pointer-events: auto !important;
+    z-index: 1 !important;
+}
+
+.detail-img {
+    position: relative;
+    z-index: 1;
+}
+
+
+
+
+.card-rating-row .star {
+    font-size: 1.2rem;
+}
+
+.card-rating-row .star.filled {
+    color: #f4b400;
+}
+
+
+.modal {
+    position: fixed;
+    z-index: 9999 !important;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 10000 !important;
+}
+
+
+/* ===========================
+   USER MENU (GLASSMORPHISM)
+=========================== */
+
+header {
+    position: relative;
+}
+
+/* Container oben rechts */
+.user-box {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 20000;
+}
+
+/* User Icon Bubble */
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    transition: 0.2s;
+}
+
+.user-icon:hover {
+    transform: scale(1.07);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dropdown */
+.user-menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 180px;
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 16px;
+    padding: 10px 0;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    display: none;
+    animation: fadeIn 0.15s ease-out;
+}
+
+/* Dropdown Buttons */
+.user-menu button {
+    width: 100%;
+    padding: 12px 18px;
+
+    text-align: left;
+    background: transparent;
+    border: none;
+
+    font-size: 15px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.user-menu button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Fade Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================
+   LOGIN BUTTON FIX
+=========================== */
+
+#loginBtn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    z-index: 30000;
+    pointer-events: auto !important;
+}
+
+
+/* =========================================================
+   COLLECTION SELECT MODAL (Recipe -> "In Sammlung speichern")
+   ========================================================= */
+
+#collectionSelectModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+    z-index: 99999;
+}
+
+#collectionSelectModal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.collection-select-box {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+
+    animation: fadeIn 0.25s ease;
+}
+
+.collection-select-box h2 {
+    margin-top: 0;
+    text-align: center;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.collection-select-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.collection-select-item {
+    width: 50%;
+    padding: 14px;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.138);
+    border: 1px solid white;
+    color: white;
+    font-size: 1.1rem;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-align: left;
+}
+
+.collection-select-item:hover {
+    background: rgba(255,255,255,0.28);
+    transform: translateY(-3px);
+}
+
+#closeCollectionSelect {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#closeCollectionSelect:hover {
+    background: rgba(255,255,255,0.4);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ===============================
+   MODERNER "In Sammlung speichern"-Button
+   =============================== */
+.detail-save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid black;
+    border-radius: 14px;
+
+    padding: 10px 18px;
+    font-size: 1rem;
+    color: black;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.detail-save-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
+}
+
+/* Icon davor */
+.detail-save-btn::before {
+    content: "📁";
+    font-size: 1.2rem;
+}
+
+
+.modal-cancel-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.modal-cancel-btn:hover {
+    background: rgba(255,255,255,0.3);
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard – Rezepte</title>
+
+    <link rel="stylesheet" href="style-dashboard.css" />
+</head>
+<body>
+
+    <!-- Top-Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="logo">🍽️ Rezepte</a>
+        </div>
+        <div class="topbar-right">
+            <span id="userGreeting" class="user-greeting">Hallo!</span>
+            <img src="Bilder/user.png" alt="User" class="user-avatar" id="userAvatar">
+            <div class="user-dropdown" id="userDropdown">
+                <button onclick="window.location.href='settings.html'">Einstellungen</button>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="page">
+
+        <!-- Intro / Hero -->
+        <section class="hero-card">
+            <div>
+                <h1>Dein Koch-Dashboard</h1>
+                <p>Verwalte deine Rezepte, Sammlungen und Einstellungen an einem Ort.</p>
+            </div>
+            <div class="hero-actions">
+                <button class="btn primary" onclick="window.location.href='index.html'">+ Neues Rezept</button>
+                <button class="btn ghost" onclick="window.location.href='collections.html'">Sammlungen ansehen</button>
+            </div>
+        </section>
+
+        <!-- Zwei Spalten: Sammlungen & Einstellungen -->
+        <section class="section-grid">
+
+            <article class="card gradient-collections">
+                <div class="card-header">
+                    <h2>📚 Öffentliche Rezeptsammlungen</h2>
+                </div>
+                <p class="card-text">
+                    Erstelle Sammlungen wie <b>„Meal Prep“</b>, <b>„Weihnachten“</b> oder <b>„Fitness“</b> und teile sie mit Freunden.
+                </p>
+                <button class="btn light" onclick="window.location.href='collections.html'">
+                    Sammlungen öffnen
+                </button>
+            </article>
+
+            <article class="card gradient-settings">
+                <div class="card-header">
+                    <h2>⚙️ Einstellungen</h2>
+                </div>
+                <p class="card-text">
+                    Passe dein Profil, Design und Konto-Einstellungen an. Hier entsteht deine persönliche App-Zentrale.
+                </p>
+                <button class="btn light" onclick="window.location.href='settings.html'">
+                    Zu den Einstellungen
+                </button>
+            </article>
+
+        </section>
+
+        <!-- Meine Rezepte als Pinterest-Grid -->
+        <section class="card recipes-card">
+            <div class="card-header">
+                <h2>🥘 Meine Rezepte</h2> 
+                <span id="recipeCount" class="muted"></span>
+            </div>
+
+            <div id="recipesGrid" class="recipes-grid">
+                <p class="muted">Lade deine Rezepte…</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="dashboard.js"></script>
+
+</body>
+</html>

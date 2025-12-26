@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sammlungen</title>
+
+    <link rel="stylesheet" href="style-dashboard.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEBp1b51PFFZ7jDFnmuBUicEuiY_xH9DA",
+            authDomain: "rezepte-app-c72fb.firebaseapp.com",
+            projectId: "rezepte-app-c72fb",
+            storageBucket: "rezepte-app-c72fb.firebasestorage.app",
+            messagingSenderId: "316955454818",
+            appId: "1:316955454818:web:b435764d1a06abe4add03b"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+</head>
+<body>
+
+<header class="topbar">
+    <a href="dashboard.html" class="logo">← Zurück</a>
+    <h1>Sammlungen</h1>
+</header>
+
+<main class="page">
+
+    <!-- BUTTON FEHLTE → jetzt wieder drin -->
+    <section class="section">
+        <button id="newCollectionBtn" class="btn primary">+ Neue Sammlung</button>
+    </section>
+
+    <!-- Grid -->
+    <section id="collectionGrid" class="collections-grid">
+        <p class="muted">Lade deine Sammlungen…</p>
+    </section>
+
+</main>
+
+
+<!-- MODAL: Neue Sammlung erstellen -->
+<div id="newCollectionModal" class="modal">
+    <div class="modal-content small">
+        <h2>Neue Sammlung</h2>
+
+        <label>Name der Sammlung</label>
+        <input id="collectionNameInput" type="text" placeholder="z.B. Meal Prep">
+
+        <label>Icon (Emoji)</label>
+        <input id="collectionIconInput" type="text" placeholder="🍝">
+
+        <div class="modal-actions">
+            <button id="cancelNewCollection" class="btn ghost">Abbrechen</button>
+            <button id="createCollection" class="btn primary">Erstellen</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="collections.js"></script>
+</body>
+</html> 

@@ -1,0 +1,223 @@
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f5f7;
+    color: #111;
+}
+
+/* Topbar */
+.topbar {
+    background: #fff;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+}
+
+.back-btn {
+    text-decoration: none;
+    font-size: 22px;
+    color: #333;
+}
+
+.page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+}
+
+/* Cards */
+.settings-card {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 22px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.settings-card h2 {
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+/* Profile */
+.profile-section {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.profile-email {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: -6px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.btn.edit {
+    background: #f5f5f7;
+    color: #111;
+}
+
+.btn.danger {
+    background: #ff4d4f;
+    color: #fff;
+}
+
+/* Dark Mode Toggle */
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input { 
+    opacity: 0; 
+    width: 0; 
+    height: 0; 
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #ccc;
+    border-radius: 999px;
+    transition: 0.3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background: #111;
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* Dark Mode */
+body.dark {
+    background: #1a1a1a;
+    color: #f5f5f7;
+}
+
+body.dark .settings-card {
+    background: #2a2a2a;
+}
+
+body.dark .btn.edit {
+    background: #333;
+    color: #eee;
+}
+
+body.dark .btn.danger {
+    background: #e74c3c;
+}
+
+
+/* GLASSMORPHISM DROPDOWN */
+.user-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 180px;
+
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-radius: 16px;
+    padding: 10px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    display: none;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.user-dropdown button {
+    width: 100%;
+    padding: 12px 18px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.user-dropdown button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Avatar */
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+}
+
+/* Smooth Fade Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
